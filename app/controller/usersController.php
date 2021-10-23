@@ -1,18 +1,11 @@
 <?php 
 
 class usersController  extends controller{
-
-   
-
-
-	public function register(){
+    public function register(){
 		if(isLoggedIn()){
             redirect('home\index');
           }else{
-
             if($_SERVER["REQUEST_METHOD"] == "POST"){
-                //echo 'withinh';
-                //data from the form is put in an array
                 $data = [
                     
                     "name" => trim($_POST["name"]),
@@ -36,21 +29,15 @@ class usersController  extends controller{
                 } elseif(strlen($data["name"])<2){
                     $data["name_err"] = "Name too short";
                 }
-
                 if(empty($data["surname"])){
                     $data["surname_err"] = "Enter surname";
                 }elseif(strlen($data["surname"])<2){
                     $data["surname_err"] = "Surname too short";
                 }
-
                 /******************************************************************************************/
-                //$this->model('user',$data);
-                //$this->model->render1();
-                //$userModel=new user();
                 $this->model('user',$data);
                 $userModel=new user();
                 $findUser = $userModel->findUser($data["email"]);
-
                 /******************************************************************************************/
                 if(empty($data["email"])){
                     $data["email_err"] = "Enter email";
@@ -59,7 +46,6 @@ class usersController  extends controller{
                 }elseif( $findUser){
                     $data["email_err"] = "User is already registered";
                 } 
-
                 if(empty($data["phone"])){
                     $data["phone_err"] = "Enter Phone number";
                 } elseif(strlen($data["phone"]) < 10){
@@ -67,9 +53,6 @@ class usersController  extends controller{
                 } elseif(!is_numeric($data["phone"])){
                     $data["phone_err"] = "Invalid number";
                 }
-
-            
-
                 if(empty($data["password"])){
                     $data["password_err"] = "Enter password";
                 } elseif(strlen($data["password"]) < 6){
@@ -79,18 +62,14 @@ class usersController  extends controller{
                 }elseif (!preg_match("#[a-zA-Z]+#", $data["password"])) {
                     $data["password_err"] = "Password must include at least one letter!";
                 }     
-
                 if(empty($data["password2"])){
                     $data["password2_err"] = "Confirm password";
                 }
                 if($data["password"] !== $data["password2"]){
                     $data["password2_err"] = "Passwords do not match";
                 }
-
                 $IsValid = empty($data["name_err"]) && empty($data["surname_err"]) && empty($data["phone_err"]) && empty($data["city_err"]) && empty($data["password_err"]) && empty($data["password2_err"]);
-
                 if($IsValid){
-
                     $password =$data["password"];
 
                     //Encrypting the password
@@ -192,19 +171,12 @@ class usersController  extends controller{
 
             }else{
                 $data = [
-                    
-                    "email" => "",
-                                   
+                    "email" => "",     
                     "password" => "",
-                    
                     "status" => "",
-                    
                     "email_err" => "",
-                                    
                     "password_err" => "",
-                    
                 ];
-
                 $this->view('home\login',$data);
                 $this->view->render();
             }
@@ -217,7 +189,7 @@ class usersController  extends controller{
         }else{
             $_SESSION['id']=$userData[0]['Id'];
             $_SESSION['email']=$userData[0]['Email'];
-             $_SESSION['phone']=$userData[0]['Phone'];
+            $_SESSION['phone']=$userData[0]['Phone'];
             $_SESSION['name']=$userData[0]['FirstName']." ".$userData[0]['LastName'];  
         }
     }
@@ -234,22 +206,17 @@ class usersController  extends controller{
     }
 
     public function logout($confirm=false){
-
         if($confirm){
             if(!isLoggedIn()){
                 $this->flash("Logging out","You are not logged in",URLROOT.'home/index');
-                
               }else{
                 unset($_SESSION['id']);
                 unset($_SESSION['email']);
                 session_destroy();
                 $this->flash("Logging out","You have been Successfully logged out",URLROOT.'home/index');
-                //redirect('home\index');
                 }
         }else{
-            
             $this->warning("Logging out","Confirm you want to log out ","users\logout\\".true);
-            
         }
         
     }
@@ -261,55 +228,38 @@ class usersController  extends controller{
         if(!isAdmin()){
             redirect('home\index');
         }else{
-        
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
-                //data from the form is put in an array
                 $data = [
-                    //"id" => trim($_POST["id"]),
                     "song" => trim($_POST["title"]),
                     "cover" => trim($_POST["Cover"]),
                     "artist" => trim($_POST["artist"]),
                     "action" => "",
-
                     "song_err"=>"",
                     "title_err"=>"",
                     "artist_err"=>"",
                     "cover_err"=>""  
-                    
                 ];
                 $data['id']=$id;
-
-                
-
                 $this->model('user',$data);
                 $musicFile=new User;
                 $ex = $musicFile->updateSong($data);
                 if($ex){
                     $this->view('home\admin',$data);
                     $this->model('Music',$data);
-                    //$this->model->render1();
                     $this->view->render();
                 }else{
                     echo "something went wrong";
                 }
-
-
-
              }else{
-
                 $data = [
                     "song_err"=>"",
                     "title_err"=>"",
                     "artist_err"=>"",
                     "cover_err"=>""
-
                 ];
                 $this->model('user',$data);
                 $musicFile=new User;
                 $data =array_merge($musicFile->getSong($id)[0],$data);
-
-                
-
                 $this->view('home\changeSong',$data);
                 $this->view->render();
             }
@@ -627,143 +577,21 @@ class usersController  extends controller{
             }
         }    
 	}
-
-	// public function upload(){
- //        if (!isAdmin()) {
- //            redirect('home\index');
- //        } else {
-           
- //    		if($_SERVER["REQUEST_METHOD"] == "POST"){
- //                //data from the form is put in an array
- //                $data = [
- //                    "song" => $_FILES["song"],
-                    
- //                    "title" => str_replace("'","",trim($_POST["title"])),
-
- //                    "artist" => str_replace("'","",trim($_POST["artist"])),
-
- //                    "cover" => $_FILES["cover"],
-
- //                    "song_err"=>"",
- //                    "title_err"=>"",
- //                    "artist_err"=>"",
- //                    "cover_err"=>""
-                    
- //                 ];
-
- //                 if(empty($data["song"])){
- //                    $data["song_err"] = "Choose a song";
- //                }
-
- //                if(empty($data["title"])){
- //                    $data["title_err"] = "Enter title";
- //                } elseif(strlen($data["title"])<2){
- //                    $data["title_err"] = "Title too short";
- //                }
-
- //                if(empty($data["artist"])){
- //                    $data["artist_err"] = "Enter artist";
- //                } elseif(strlen($data["artist"])<1){
- //                    $data["artist_err"] = "Artist too short";
- //                }
-
- //                if(empty($data["cover"])){
- //                    $data["cover_err"] = "Choose a cover";
- //                }
-
-
- //                 $data["song_err"]=$this->prepareFile($data['song'],'music',$data['title']);
- //                 if(!empty($data['cover']['name'])){
- //                    $data["cover_err"]=$this->prepareFile($data['cover'],'img/covers',$data['title']);
- //                    }
- //                 if(empty($data['song_err']) && empty($data['cover_err']) && empty($data['title_err']) && empty($data['artist_err'])){
- //    					$song=$data['song'];
- //                        $fileExt1 = explode('.',$song['name']);
- //                        $fileActualExt1 = strtolower(end($fileExt1));
- //                        $allow = array('jpg','jpeg','png','mp3');
-
-                        
- //                        if(!in_array($fileActualExt, $allow)){
- //                            $fileActualExt1 = 'mp3';
- //                        }
- //                        $song1=$data['title'].'.'.$fileActualExt1;
-
-
-
-                        
- //                        if(!empty($data['cover']['name'])){
- //        					$cover=$data['cover'];
- //        	            	$fileExt2 = explode('.',$cover['name']);
- //        	            	$fileActualExt2 = strtolower(end($fileExt2));             	
- //                         	$cover1=$data['title'].'.'.$fileActualExt2;
- //                            }else{
- //                                $cover1="cover1.jpg";
- //                            }
-
-
- //                        $this->model('user',$data);
- //                        $a = new user;
- //                     	$a->UploadSong($song1,$data['artist'],$cover1);
- //                        $this->flash("Success","New song Successfully Added to playlist",'users\admin');
-
- //                 }else{
- //                 	//$this->view('home\admin',$data);
- //                 	$this->model('Music',$data);
- //    				//$this->model->render1();
- //                 	//$this->view->render();
- //                 	echo "error ";
- //                    var_dump($data);
- //                 }          
-
-                
- //            }else{
- //            	$data = [
- //            		"song" => "",
-                    
- //                    "title" => "",
-
- //                    "artist" => "",
-
- //                    "cover" => "",
- //                    "song_err"=>"",
- //                    "title_err"=>"",
- //                    "artist_err"=>"",
- //                    "cover_err"=>""
-
- //            	];
-
- //                $this->view('home\admin',$data);
- //                        $this->view->render();
- //            }
- //        }
- //    }
-
     public function admin(){
-        
-            
                 if (isAdmin()) {
                     $this->model('music',[]);
                     $music=new Music();
                     $data=$music->getAllsong();
-
                     $this->view('home\admin',$data);
                     $this->view->render();
-                 } else {
-                                       
+                 } else {          
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
-                
                         $data = [
-                            
-                            "email" => trim($_POST["email"]),
-                                           
+                            "email" => trim($_POST["email"]),        
                             "password" => trim($_POST["password"]),
-                            
                             "status" => "",
-                            
-                            "email_err" => "",
-                                            
+                            "email_err" => "",     
                             "password_err" => "",
-                            
                         ];
                         $this->model('user',$data);
                         $userModel=new user();
@@ -896,9 +724,6 @@ class usersController  extends controller{
                     "message" => "",
                     
                     "email_err" => "",
-                                    
-                   
-                    
                 ];
 
                 $this->view('home\forgotpassword',$data);
@@ -917,7 +742,7 @@ class usersController  extends controller{
             $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
             $mail->Username   = 'freddymuleya16@gmail.com';                     // SMTP username
-            $mail->Password   = '0747987923';                               // SMTP password
+            $mail->Password   = '';                               // SMTP password
             $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
             $mail->Port       = 587;   //ssl / 465                                 // TCP port to connect to
 
