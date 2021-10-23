@@ -1,9 +1,6 @@
 <?php
 $action = $this->getAction();
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,9 +33,7 @@ $action = $this->getAction();
     });
   </script>
 </head>
-
 <body>
-
   <div class="header">
     <div class="nav-bar">
       <div class="nav-bar-left">

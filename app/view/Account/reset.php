@@ -1,7 +1,6 @@
 <?php
 include VIEW . 'header.php';
 ?>
-
 <div class="wrapper">
   <h3>Reset</h3>
   <div id="error_message"></div>

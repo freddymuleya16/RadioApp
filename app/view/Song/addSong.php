@@ -1,6 +1,5 @@
 <?php
 include VIEW . 'header.php';
-
 ?>
 <br><br>
 <div class="wrapper">

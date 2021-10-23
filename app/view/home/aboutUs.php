@@ -1,6 +1,5 @@
 <?php
   include VIEW.'header.php';
-
 ?>
 <div class="wrapper">
   <h3>Contact Us</h3>

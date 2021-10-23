@@ -1,16 +1,9 @@
 <?php
 include VIEW . 'header.php';
 ?>
-
 <script type="text/javascript">
   function validatee() {
-
     document.getElementById("myform").submit();
-    // if(validate()){
-    //   document.getElementById("myform").submit();
-    // }else{
-    //   return validate();
-    //}
   }
 </script>
 <div class="wrapper">
