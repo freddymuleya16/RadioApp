@@ -5,7 +5,7 @@
 <div class="wrapper">
   <h3>Contact Us</h3>
   <div id="error_message"></div>
-  <form id="myform" action="<?php  echo URLROOT;?>users/contact/" method='post'>
+  <form id="myform" action="<?php  echo URLROOT;?>home/contact/" method='post'>
   <div class="form">
    
     <div class="input_field">
@@ -37,5 +37,6 @@
 
 
 
-</body>
-</html>
+<?php
+  include VIEW.'footer.php';
+?> 

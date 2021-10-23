@@ -1,27 +1,23 @@
 <?php
 session_start();
-
-// Flash message helper
-
-
-
- // Check Logged In
- function isLoggedIn(){
-  if(isset($_SESSION['id'])){
+// Check Logged In
+function isLoggedIn()
+{
+  if (isset($_SESSION['id'])) {
     return true;
   } else {
     return false;
   }
 }
-function isAdmin(){
-  if(isset($_SESSION['id']) && isset($_SESSION['status'])){
+function isAdmin()
+{
+  if (isset($_SESSION['id']) && isset($_SESSION['status'])) {
     return true;
   } else {
     return false;
   }
 }
-
-function redirect($page){
-    header('location: '.URLROOT.$page);
-  }
-
+function redirect($page)
+{
+  header('location: ' . URLROOT . $page);
+}

@@ -36,8 +36,7 @@ $(document).ready(function(){
 
 		});
 function loadLikes(songId){
-	//var songId = $('#audio-player .ide').text();
-	//$("#numLikes").text(null);
+	
 	$("#numLikes").load(URLROOT+"home/loadLike/"+songId);
 }
 

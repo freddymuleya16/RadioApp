@@ -1,6 +1,7 @@
 <?php
 
-class database{
+class database
+{
 	private $servername = SERVERNAME;
 	private $username = USERNAME;
 	private $password = PASSWORD;
@@ -8,26 +9,23 @@ class database{
 
 	private $stmt;
 	private $SQL;
+	public function connect()
+	{
 
-	
-	public function connect(){
-		
-		$dsn = 'mysql:host=' . $this->servername.';dbname='.$this->dbname;
-		$options = array (
+		$dsn = 'mysql:host=' . $this->servername . ';dbname=' . $this->dbname;
+		$options = array(
 			PDO::ATTR_PERSISTENT => true,
 			PDO::ATTR_EMULATE_PREPARES => false,
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 		);
-		try{
-			$pdo = new PDO($dsn,$this->username,$this->password,$options);
+		try {
+			$pdo = new PDO($dsn, $this->username, $this->password, $options);
 			//$pdo->setAttribute(,);
 			return $pdo;
-		}catch(Exception $e){
+		} catch (Exception $e) {
 			error_log($e->getMessage());
 			exit("Check Error log");
 		}
-				
 	}
-
 }

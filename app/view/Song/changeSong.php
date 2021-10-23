@@ -3,14 +3,12 @@
 
 ?>
 
-
-
    <br><br>
    <div class="wrapper">
    	<h3>Update Song</h3>
   <div id="error_message"></div>
    	<div class="form">
-   <form action='<?php  echo URLROOT;?>users/changeSong/<?php echo $data['Id']; ?>' method='post' enctype='multipart/form-data'>
+   <form action='<?php  echo URLROOT;?>Song/changeSong/<?php echo $data['Id']; ?>' method='post' enctype='multipart/form-data'>
    	<div class="form">
    		
    		
@@ -30,7 +28,7 @@
       </div>
 
 	    
-   		<input class="btn" type='submit' name='submit' value='Update Song'><a  class="dlt" href="<?php  echo URLROOT;?>users/deleteSong/<?php echo $data['Id']; ?>"> Delete Song</a>
+   		<input class="btn" type='submit' name='submit' value='Update Song'><a  class="dlt" href="<?php  echo URLROOT;?>Song/deleteSong/<?php echo $data['Id']; ?>"> Delete Song</a>
 
    	</div>
 
