@@ -15,7 +15,7 @@ $(document).ready(function () {
         comment: comment,
         author: author,
       });
-	} else {
+	} else { 
 		alert("Comment too short");
 	}
   });
